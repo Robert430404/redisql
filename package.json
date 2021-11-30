@@ -4,7 +4,8 @@
   "description": "This is a SQL implementation on top of Redis",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,16 @@
   },
   "homepage": "https://github.com/Robert430404/redisql#readme",
   "devDependencies": {
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@types/jest": "^27.0.3",
+    "@types/redis": "^2.8.32",
+    "@types/reflect-metadata": "^0.1.0",
     "jest": "^27.4.0",
+    "reflect-metadata": "^0.1.13",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "redis": "^4.0.0"
   }
 }

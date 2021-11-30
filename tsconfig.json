@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "pretty": true,
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "lib": ["es2018", "dom", "esnext.asynciterable"],
+    "types": ["reflect-metadata", "jest"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "sourceMap": true,
+    "declaration": true,
+    "paths": {
+      "*": ["./*"]
+    }
+  },
+  "include": ["src", "index.ts"],
+  "exclude": ["node_modules"]
+}
