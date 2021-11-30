@@ -1,0 +1,30 @@
+{
+  "name": "redisql",
+  "version": "1.0.0",
+  "description": "This is a SQL implementation on top of Redis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Robert430404/redisql.git"
+  },
+  "keywords": [
+    "TypeScript",
+    "JavaScript",
+    "Redis",
+    "SQL",
+    "RediSQL"
+  ],
+  "author": "Robert Cox <robert@studiorclv.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Robert430404/redisql/issues"
+  },
+  "homepage": "https://github.com/Robert430404/redisql#readme",
+  "devDependencies": {
+    "jest": "^27.4.0",
+    "typescript": "^4.5.2"
+  }
+}
