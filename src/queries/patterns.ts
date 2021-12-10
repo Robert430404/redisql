@@ -5,7 +5,7 @@ export const insertPattern = new RegExp(
 
 /** Represents the valid parts of a select query */
 export const selectPattern = new RegExp(
-  /([selectSELECT]*) (?<requested>[a-zA-Z\*, _]*) ([FROMfrom]*) (?<table>[a-zA-Z_]*)/g
+  /([SELECTselect]*) (?<requested>[a-zA-Z\*, _]*) ([FROMfrom]*) (?<table>[a-zA-Z_]*)/g
 );
 
 /** Represents the valid parts of an update query */
