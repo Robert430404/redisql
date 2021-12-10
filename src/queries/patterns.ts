@@ -1,19 +1,19 @@
 /** Represents the valid parts of an insert query */
 export const insertPattern = new RegExp(
-  /([INSERTinsert]*) ([INTOinto]*) (?<table>[a-zA-Z_]*) (?<columns>\([a-zA-Z0-9, ]*\)) ([VALUESvalue]*) (?<values>\([a-zA-Z0-9, ]*\))/g
+  /(INSERT|insert) (INTO|into) (?<table>[a-zA-Z_]*) (?<columns>\([a-zA-Z0-9, ]*\)) (VALUES|values) (?<values>\([a-zA-Z0-9, ]*\))/g
 );
 
 /** Represents the valid parts of a select query */
 export const selectPattern = new RegExp(
-  /([selectSELECT]*) (?<requested>[a-zA-Z\*, _]*) ([FROMfrom]*) (?<table>[a-zA-Z_]*)/g
+  /(SELECT|select) (?<requested>[a-zA-Z\*, _]*) (FROM|from) (?<table>[a-zA-Z_]*) ?(WHERE|where)? ?(?<conditions>[a-zA-Z0-9=!<> '"]*)?/g
 );
 
 /** Represents the valid parts of an update query */
 export const updatePattern = new RegExp(
-  /([UPDATEupdate]*) (?<table>[a-zA-Z_]*) ([setSET]*) (?<updates>[a-zA-Z0-9 =,]*) ([whereWHERE]*) (?<condition>[a-zA-Z0-9=!<> '"]*)/g
+  /(UPDATE|update) (?<table>[a-zA-Z_]*) (SET|set) (?<updates>[a-zA-Z0-9 =,]*) (WHERE|where) (?<condition>[a-zA-Z0-9=!<> '"]*)/g
 );
 
 /** Represents the valid parts of a delete query */
 export const deletePattern = new RegExp(
-  /([DELETEdelete]*) ([fromFROM]*) (?<table>[a-zA-Z_]*) ([whereWHERE]*) (?<conditions>[a-zA-Z0-9=!<> '"]*)/g
+  /(DELETE|delete) (FROM|from) (?<table>[a-zA-Z_]*) (WHERE|where) (?<conditions>[a-zA-Z0-9=!<> '"]*)/g
 );

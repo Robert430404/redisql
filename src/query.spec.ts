@@ -5,8 +5,13 @@ describe("SQLQuery Class", () => {
   it("Should correctly detect SELECT queries", () => {
     const queries = [
       "select * from table",
-      "SelEcT * from table",
       "SELECT * from table",
+      "select * from table WHERE id < 0",
+      "SELECT * from table WHERE id > 0",
+      "select * from table where id < 0",
+      "SELECT * from table where id > 0",
+      "select * from table where id == 0",
+      "SELECT * from table where id != 0",
     ];
 
     queries.forEach((query) => {
@@ -20,7 +25,6 @@ describe("SQLQuery Class", () => {
   it("Should correctly detect INSERT queries", () => {
     const queries = [
       "insert INTO TABLE_NAME (column1, column2, column3) VALUES (value1, value2, value3)",
-      "iNsErt INTO TABLE_NAME (column1, column2, column3) VALUES (value1, value2, value3)",
       "INSERT INTO TABLE_NAME (column1, column2, column3) VALUES (value1, value2, value3)",
     ];
 
@@ -35,7 +39,6 @@ describe("SQLQuery Class", () => {
   it("Should correctly detect UPDATE queries", () => {
     const queries = [
       "update table_name SET column1 = value1 WHERE condition",
-      "UpdAtE table_name SET column1 = value1 WHERE condition",
       "UPDATE table_name SET column1 = value1 WHERE condition",
     ];
 
@@ -50,7 +53,6 @@ describe("SQLQuery Class", () => {
   it("Should correctly detect DELETE queries", () => {
     const queries = [
       "delete FROM table_name WHERE column < 1",
-      "dElEtE FROM table_name WHERE column < 1",
       "DELETE FROM table_name WHERE column < 1",
     ];
 
