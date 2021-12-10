@@ -8,7 +8,7 @@ describe("QueryManager Class", () => {
     const instance = new mock();
 
     instance.sendCommand = (redisCommand: RedisCommand) => {
-      expect(redisCommand.length).toEqual(1);
+      expect(redisCommand.length).toEqual(4);
       expect(redisCommand[0]).toEqual("SET");
     };
 
