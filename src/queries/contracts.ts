@@ -6,4 +6,10 @@ export type RedisCommand = string[];
 export interface QueryInterface {
   /** Returns the command that the manager will send to redis */
   getRedisCommand(): RedisCommand;
+
+  /** Sets the private key for the query */
+  setPrivateKey(privateKey: string): this;
+
+  /** Returns the table we're operating on */
+  getTable(): string;
 }
