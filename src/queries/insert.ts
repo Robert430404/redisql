@@ -64,6 +64,9 @@ export class InsertQuery implements QueryInterface {
 
   /** Returns the formatting redis command from the instruction set */
   public getRedisCommand = (): RedisCommand => {
+    // Inject the primary key into the record
+    this.parsedRecord['id'] = this.getPrivateKey();
+
     // Stringify the value for hashing and storage
     const encodedValues = JSON.stringify(this.parsedRecord);
 

@@ -18,6 +18,8 @@ export class SelectQuery implements QueryInterface {
   /** Our private key if one is provided */
   private privateKey?: string;
 
+  private conditions: string;
+
   /** Ingets the query and handles parsing the request */
   constructor(rawQuery: string) {
     validateSelectQuery(rawQuery);
@@ -27,6 +29,8 @@ export class SelectQuery implements QueryInterface {
     if (!isSelectGroup(groups)) {
       throw new Error('You passed an invalid query');
     }
+
+    console.log(groups);
   }
 
   /** Sets the private key on the instance of the query */

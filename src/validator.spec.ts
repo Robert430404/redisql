@@ -1,3 +1,3 @@
-describe("Insert Validation", () => {
-  it("Should detect invalid INSERT queries", () => {});
+describe('Unit Insert Validation', () => {
+  it('Should detect invalid INSERT queries', () => {});
 });

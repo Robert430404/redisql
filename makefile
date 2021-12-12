@@ -7,5 +7,8 @@ stop-dev:
 	podman stop $(container-name)
 	podman rm $(container-name)
 
-test:
-	npm run test
+unit-test:
+	npm run test:unit
+
+integration-test:
+	npm run test:integration

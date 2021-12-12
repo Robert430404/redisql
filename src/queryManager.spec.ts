@@ -2,7 +2,7 @@ import { QueryManager } from './queryManager';
 import { SqlQuery } from './query';
 import { RedisCommand } from 'queries';
 
-describe('QueryManager Class', () => {
+describe('Unit QueryManager Class', () => {
   it('Should Execute Insert Query', () => {
     const mock = jest.fn();
     const redisClientInstance = new mock();

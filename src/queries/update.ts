@@ -1,13 +1,13 @@
-import { validateUpdateQuery } from "../validator";
-import { QueryInterface, RedisCommand } from "../queries";
+import { validateUpdateQuery } from '../validator';
+import { QueryInterface, RedisCommand } from '../queries';
 
 export class UpdateQuery implements QueryInterface {
+  private privateKey: string;
+
+  private table: string;
+
   constructor(rawQuery: string) {
     validateUpdateQuery(rawQuery);
-  }
-
-  getRedisCommand(): RedisCommand {
-    throw new Error("Method not implemented.");
   }
 
   /** Sets the private key on the instance of the query */
@@ -17,16 +17,17 @@ export class UpdateQuery implements QueryInterface {
     return this;
   };
 
+  public getTable = (): string => {
+    return this.table;
+  };
+
   /** Returns the formatting redis command from the instruction set */
   public getRedisCommand = (): RedisCommand => {
-    // Stringify the value for hashing and storage
-    const encodedValues = JSON.stringify(this.parsedRecord);
-
     return [
-      Command.Set, // Command
-      `${this.table}:${this.getPrivateKey()}`, // Key
-      encodedValues, // Value
-      "NX", // If Not Exists
+      // Command.Set, // Command
+      // `${this.table}:${this.getPrivateKey()}`, // Key
+      // encodedValues, // Value
+      'NX', // If Not Exists
     ];
   };
 
@@ -37,7 +38,7 @@ export class UpdateQuery implements QueryInterface {
     }
 
     throw new Error(
-      "Please set a private key on the query. (Use the query manager to do this for you)"
+      'Please set a private key on the query. (Use the query manager to do this for you)',
     );
   };
 }

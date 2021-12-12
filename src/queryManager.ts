@@ -1,9 +1,6 @@
+import { RedisClient } from './connection';
 import { KeyManager } from 'data/keyManager';
-import { createClient } from 'redis';
 import { SqlQuery } from './query';
-
-/** The redis client type, derived from the return type of createClient */
-type RedisClient = ReturnType<typeof createClient>;
 
 /**
  * Handles the managment of the queries within the client connection
@@ -20,13 +17,17 @@ export class QueryManager {
   /**
    * Executes the passed query
    */
-  public execute = (query: SqlQuery) => {
+  public execute = async (query: SqlQuery): Promise<void> => {
     const queryInstance = query.getQuery();
 
     queryInstance.setPrivateKey(
-      this.keyManager.getNextPrimaryKey(queryInstance.getTable()),
+      await this.keyManager.getNextPrimaryKey(queryInstance.getTable()),
     );
 
-    this.connection.sendCommand(queryInstance.getRedisCommand());
+    try {
+      await this.connection.sendCommand(queryInstance.getRedisCommand());
+    } catch (e) {
+      console.error('could not operate on the redis instance', e);
+    }
   };
 }
