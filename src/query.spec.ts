@@ -5,6 +5,13 @@ import { DeleteQuery, InsertQuery, SelectQuery, UpdateQuery } from './queries';
 import { SqlQuery, SupportedTypes } from './query';
 import { RedisClient } from './connection';
 
+type TableNameSchema = {
+  id: string;
+  column1: string;
+  column2: string;
+  column3: string;
+};
+
 describe('Unit SQLQuery Class', () => {
   it('Should correctly detect SELECT queries', () => {
     const queries = [
@@ -88,11 +95,15 @@ describe('Integration SQLQuery Class', () => {
     await redisClient.disconnect();
   });
 
-  it('Should Persist Record', async () => {
+  it('Should Persist Record And Retrieve It', async () => {
     const query = new SqlQuery(
       'insert INTO TABLE_NAME (column1, column2, column3) VALUES (value1, value2, value3)',
     );
 
-    await queryManager.execute(query);
+    const result = await queryManager.execute<TableNameSchema>(query);
+
+    expect(result.column1).toEqual('value1');
+    expect(result.column2).toEqual('value2');
+    expect(result.column3).toEqual('value3');
   });
 });

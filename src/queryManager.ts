@@ -17,17 +17,21 @@ export class QueryManager {
   /**
    * Executes the passed query
    */
-  public execute = async (query: SqlQuery): Promise<void> => {
+  public execute = async <T>(query: SqlQuery): Promise<T> => {
     const queryInstance = query.getQuery();
+    const table = queryInstance.getTable();
+    const primaryKey = await this.keyManager.getNextPrimaryKey(table);
 
-    queryInstance.setPrivateKey(
-      await this.keyManager.getNextPrimaryKey(queryInstance.getTable()),
-    );
+    queryInstance.setPrivateKey(primaryKey);
 
     try {
       await this.connection.sendCommand(queryInstance.getRedisCommand());
     } catch (e) {
       console.error('could not operate on the redis instance', e);
     }
+
+    return JSON.parse(
+      await this.connection.sendCommand(['GET', `${table}:${primaryKey}`]),
+    ) as T;
   };
 }
