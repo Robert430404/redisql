@@ -22,7 +22,7 @@ describe('Unit QueryManager Class', () => {
       // Make sure all of the values match the expected arguments
       expect(redisCommand[0]).toEqual('SET');
       expect(redisCommand[1]).toEqual('MY_TABLE:test-key');
-      expect(redisCommand[2]).toEqual('{"one":"one"}');
+      expect(redisCommand[2]).toEqual('{"one":"one","id":"test-key"}');
       expect(redisCommand[3]).toEqual('NX');
     };
 

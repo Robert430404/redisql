@@ -1,4 +1,7 @@
-export type RedisCommand = string[];
+export type RedisCommand = {
+  command: string[];
+  additional: { [key: string]: unknown };
+};
 
 /**
  * Represents the interface of a query for the data

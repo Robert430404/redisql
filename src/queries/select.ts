@@ -8,6 +8,8 @@ enum Command {
   Get = 'GET',
 }
 
+type AdditionaInformation = {};
+
 /**
  * Represents a select query for the redis instance
  */
@@ -18,7 +20,11 @@ export class SelectQuery implements QueryInterface {
   /** Our private key if one is provided */
   private privateKey?: string;
 
-  private conditions: string;
+  /** These are the conditions for the query */
+  private conditions?: string;
+
+  /** These are the requested fields */
+  private requested?: string[];
 
   /** Ingets the query and handles parsing the request */
   constructor(rawQuery: string) {
@@ -30,7 +36,14 @@ export class SelectQuery implements QueryInterface {
       throw new Error('You passed an invalid query');
     }
 
-    console.log(groups);
+    const { table, conditions, requested } = groups;
+
+    this.table = table;
+    this.conditions = conditions;
+
+    if (!requested.includes('*')) {
+      this.requested = requested.split(',').map((entry) => entry.trim());
+    }
   }
 
   /** Sets the private key on the instance of the query */
@@ -47,10 +60,23 @@ export class SelectQuery implements QueryInterface {
 
   /** Returns the formatting redis command from the instruction set */
   public getRedisCommand = (): RedisCommand => {
-    return [
-      Command.Get, // Command
-      `${this.table}:${this.getPrivateKey()}`, // Key
-    ];
+    return {
+      command: [
+        Command.Get, // Command
+        this.hasPrivateKey()
+          ? `${this.table}:${this.getPrivateKey()}`
+          : this.table, // Key
+      ],
+      additional: {
+        requested: this.requested,
+        conditions: this.conditions,
+      },
+    };
+  };
+
+  /** Check if we have a valid primary key */
+  private hasPrivateKey = (): boolean => {
+    return this.getPrivateKey() !== '';
   };
 
   /** Method for retrieving the private key that does sanity checks */
@@ -59,8 +85,6 @@ export class SelectQuery implements QueryInterface {
       return this.privateKey;
     }
 
-    throw new Error(
-      'Please set a private key on the query. (Use the query manager to do this for you)',
-    );
+    return '';
   };
 }

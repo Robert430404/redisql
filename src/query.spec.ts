@@ -12,6 +12,8 @@ type TableNameSchema = {
   column3: string;
 };
 
+type TableNameCollection = TableNameSchema[];
+
 describe('Unit SQLQuery Class', () => {
   it('Should correctly detect SELECT queries', () => {
     const queries = [
@@ -96,14 +98,44 @@ describe('Integration SQLQuery Class', () => {
   });
 
   it('Should Persist Record And Retrieve It', async () => {
-    const query = new SqlQuery(
+    const insertQuery = new SqlQuery(
       'insert INTO TABLE_NAME (column1, column2, column3) VALUES (value1, value2, value3)',
     );
 
-    const result = await queryManager.execute<TableNameSchema>(query);
+    const insertResult = await queryManager.execute<TableNameSchema>(
+      insertQuery,
+    );
 
-    expect(result.column1).toEqual('value1');
-    expect(result.column2).toEqual('value2');
-    expect(result.column3).toEqual('value3');
+    expect(insertResult.column1).toEqual('value1');
+    expect(insertResult.column2).toEqual('value2');
+    expect(insertResult.column3).toEqual('value3');
+
+    const selectQuery = new SqlQuery('select * from TABLE_NAME');
+
+    const selectResult = await queryManager.execute<TableNameCollection>(
+      selectQuery,
+    );
+
+    expect(Array.isArray(selectResult)).toBeTruthy();
+
+    selectResult.forEach((result) => {
+      expect(result.column1).toEqual('value1');
+      expect(result.column2).toEqual('value2');
+      expect(result.column3).toEqual('value3');
+    });
+
+    const selectFieldsQuery = new SqlQuery('select column1 from TABLE_NAME');
+
+    const selectFieldsResult = await queryManager.execute<TableNameCollection>(
+      selectFieldsQuery,
+    );
+
+    expect(Array.isArray(selectFieldsResult)).toBeTruthy();
+
+    selectFieldsResult.forEach((result) => {
+      expect(result.column1).toEqual('value1');
+      expect(result.column2).toEqual(undefined);
+      expect(result.column3).toEqual(undefined);
+    });
   });
 });
