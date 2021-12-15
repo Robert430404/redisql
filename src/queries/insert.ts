@@ -70,12 +70,14 @@ export class InsertQuery implements QueryInterface {
     // Stringify the value for hashing and storage
     const encodedValues = JSON.stringify(this.parsedRecord);
 
-    return [
-      Command.Set, // Command
-      `${this.table}:${this.getPrivateKey()}`, // Key
-      encodedValues, // Value
-      'NX', // If Not Exists
-    ];
+    return {
+      command: [
+        Command.Set, // Command
+        `${this.table}:${this.getPrivateKey()}`, // Key
+        encodedValues, // Value
+        'NX', // If Not Exists
+      ],
+    };
   };
 
   /** Method for retrieving the private key that does sanity checks */

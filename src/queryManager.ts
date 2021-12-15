@@ -33,13 +33,14 @@ export class QueryManager {
   private handleInsert = async <T>(query: SqlQuery): Promise<T> => {
     const queryInstance = query.getQuery();
     const table = queryInstance.getTable();
-
     const primaryKey = await this.keyManager.getNextPrimaryKey(table);
 
     queryInstance.setPrivateKey(primaryKey);
 
+    const command = queryInstance.getRedisCommand().command;
+
     try {
-      await this.connection.sendCommand(queryInstance.getRedisCommand());
+      await this.connection.sendCommand(command);
     } catch (e) {
       console.error('could not operate on the redis instance', e);
     }
@@ -58,7 +59,7 @@ export class QueryManager {
     const [type, key] = redisCommand.command;
 
     // Pull the other metadata
-    const { requested, conditions } = redisCommand.additional;
+    const requested = redisCommand.additional?.requested;
 
     // If it's not a compound key assume it's just
     // the table so theres no primary key. This is a special case

@@ -1,6 +1,6 @@
 export type RedisCommand = {
   command: string[];
-  additional: { [key: string]: unknown };
+  additional?: { [key: string]: unknown };
 };
 
 /**

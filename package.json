@@ -4,6 +4,7 @@
   "description": "This is a SQL implementation on top of Redis",
   "main": "index.js",
   "scripts": {
+    "test": "jest",
     "test:unit": "jest -t \"Unit\"",
     "test:integration": "jest -t \"Integration\"",
     "build": "tsc"
